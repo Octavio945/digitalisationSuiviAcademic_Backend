@@ -1,23 +1,55 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Annonce extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Annonce.belongsTo(models.Utilisateur, {
+        foreignKey: 'utilisateur_id',
+        as: 'utilisateur'
+      });
     }
   }
+
   Annonce.init({
-    temporaire: DataTypes.STRING
+    id_annonce: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    titre_annonce: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    contenu_annonce: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    date_annonce: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    visibilite: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    images_annonce: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    utilisateur_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Utilisateurs',
+        key: 'id_utilisateur'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Annonce',
+    tableName: 'Annonces'
   });
+
   return Annonce;
 };

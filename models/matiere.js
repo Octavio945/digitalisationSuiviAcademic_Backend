@@ -1,30 +1,41 @@
 'use strict';
-const {Model} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Matiere extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      Matiere.hasMany(models.Enseignement, { foreignKey: 'matiere_id', as: 'enseignements' });
+      Matiere.hasMany(models.Coefficient, {
+        foreignKey: 'matiere_id',
+        as: 'coefficients'
+      });
+      
+      Matiere.hasMany(models.Seance, {
+        foreignKey: 'matiere_id',
+        as: 'seances'
+      });
+      
+      Matiere.hasMany(models.Composition, {
+        foreignKey: 'matiere_id',
+        as: 'compositions'
+      });
     }
   }
+
   Matiere.init({
+    id_matiere: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     nom_matiere: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
-    coefficient: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Matiere',
-    tableName: 'matieres',
+    tableName: 'Matieres'
   });
+
   return Matiere;
 };

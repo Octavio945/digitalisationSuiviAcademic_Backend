@@ -1,16 +1,34 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Bulletins', {
-      id: {
+      id_bulletin: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      temporaire: {
-        type: Sequelize.STRING
+      moyenne: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
+      contenu: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
+      commentaire: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
+      utilisateur_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Utilisateurs',
+          key: 'id_utilisateur'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

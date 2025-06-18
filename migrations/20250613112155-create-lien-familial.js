@@ -1,5 +1,5 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('LienFamilials', {
@@ -9,8 +9,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      temporaire: {
-        type: Sequelize.STRING
+      utilisateur_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Parents',
+          key: 'id_utilisateur'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      apprenant_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Apprenants',
+          key: 'id_utilisateur'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

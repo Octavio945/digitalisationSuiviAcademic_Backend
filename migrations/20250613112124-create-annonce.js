@@ -1,16 +1,42 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Annonces', {
-      id: {
+      id_annonce: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      temporaire: {
-        type: Sequelize.STRING
+      titre_annonce: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      contenu_annonce: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      date_annonce: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      visibilite: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      images_annonce: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      utilisateur_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Utilisateurs',
+          key: 'id_utilisateur'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

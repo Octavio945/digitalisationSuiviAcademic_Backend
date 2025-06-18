@@ -1,31 +1,49 @@
 'use strict';
-
-const {Model } = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Class extends Model {
-    static assiciate(models) {
-      Classe.hasMany(models.Enseignement, { foreignKey: 'classe_id', as: 'enseignements'});
-      Classe.hasMany(models.Inscription, {foreignKey: 'classe_id', as: 'inscriptions'});
+  class Classe extends Model {
+    static associate(models) {
+      Classe.hasMany(models.Coefficient, {
+        foreignKey: 'classe_id',
+        as: 'coefficients'
+      });
+      
+      Classe.hasMany(models.Seance, {
+        foreignKey: 'classe_id',
+        as: 'seances'
+      });
+      
+      Classe.hasMany(models.Inscription, {
+        foreignKey: 'classe_id',
+        as: 'inscriptions'
+      });
     }
   }
+
   Classe.init({
-    nom_classe:{
-      type: DataTypes.STRING,
-      allowNull: false,
+    id_classe: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
-    niveau:{
+    nom_classe: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
+    },
+    niveau: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     annee_scolaire: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     }
   }, {
     sequelize,
     modelName: 'Classe',
-    tableName: 'classes',
+    tableName: 'Classes'
   });
+
   return Classe;
 };

@@ -1,29 +1,60 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Inscription extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      Inscription.belongsTo(models.Utilisateur, { foreignKey: 'utilisateur_id', as: 'utilisateur' });
-      Inscription.belongsTo(models.Classe, { foreignKey: 'classe_id', as: 'classe' });
-      Inscription.hasMany(models.Bulletin, {foreignKey: 'inscription_id', as: 'bulletins'});
+      Inscription.belongsTo(models.Utilisateur, {
+        foreignKey: 'utilisateur_id',
+        as: 'utilisateur'
+      });
+      
+      Inscription.belongsTo(models.Classe, {
+        foreignKey: 'classe_id',
+        as: 'classe'
+      });
     }
   }
+
   Inscription.init({
-    utilisateur_id: DataTypes.INTEGER,
-    classe_id: DataTypes.INTEGER,
-    annee_scolaire: DataTypes.STRING,
-    statut: DataTypes.STRING, 
+    id_inscription: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    date_inscription: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    annee_scolaire: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    statut: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    utilisateur_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Utilisateurs',
+        key: 'id_utilisateur'
+      }
+    },
+    classe_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Classes',
+        key: 'id_classe'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Inscription',
-    tableName: 'inscriptions',
+    tableName: 'Inscriptions'
   });
+
   return Inscription;
 };

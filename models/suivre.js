@@ -2,36 +2,41 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Document extends Model {
+  class Suivre extends Model {
     static associate(models) {
-      Document.belongsTo(models.Utilisateur, {
+      Suivre.belongsTo(models.Seance, {
+        foreignKey: 'seance_id',
+        as: 'seance'
+      });
+      
+      Suivre.belongsTo(models.Utilisateur, {
         foreignKey: 'utilisateur_id',
         as: 'utilisateur'
       });
     }
   }
 
-  Document.init({
-    id_document: {
+  Suivre.init({
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    titre: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    fichier: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    type_document: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    date_document: {
+    date_suivre: {
       type: DataTypes.DATE,
       allowNull: false
+    },
+    statut: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    seance_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Seances',
+        key: 'id_seance'
+      }
     },
     utilisateur_id: {
       type: DataTypes.INTEGER,
@@ -43,9 +48,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Document',
-    tableName: 'Documents'
+    modelName: 'Suivre',
+    tableName: 'Suivres'
   });
 
-  return Document;
+  return Suivre;
 };

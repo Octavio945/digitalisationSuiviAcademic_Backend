@@ -2,27 +2,23 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Documents', {
-      id_document: {
+    await queryInterface.createTable('Inscriptions', {
+      id_inscription: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      titre: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      fichier: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      type_document: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      date_document: {
+      date_inscription: {
         type: Sequelize.DATE,
+        allowNull: false
+      },
+      annee_scolaire: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      statut: {
+        type: Sequelize.STRING,
         allowNull: false
       },
       utilisateur_id: {
@@ -30,6 +26,15 @@ module.exports = {
         references: {
           model: 'Utilisateurs',
           key: 'id_utilisateur'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      classe_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Classes',
+          key: 'id_classe'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
@@ -45,6 +50,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Documents');
+    await queryInterface.dropTable('Inscriptions');
   }
 };

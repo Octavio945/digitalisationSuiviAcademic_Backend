@@ -2,34 +2,40 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Documents', {
-      id_document: {
+    await queryInterface.createTable('Compositions', {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      titre: {
+      type_composition: {
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      fichier: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      type_document: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      date_document: {
-        type: Sequelize.DATE,
         allowNull: false
       },
       utilisateur_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Utilisateurs',
+          model: 'Apprenants',
           key: 'id_utilisateur'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      periode_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Periodes',
+          key: 'id_periode'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      matiere_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Matieres',
+          key: 'id_matiere'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
@@ -45,6 +51,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Documents');
+    await queryInterface.dropTable('Compositions');
   }
 };

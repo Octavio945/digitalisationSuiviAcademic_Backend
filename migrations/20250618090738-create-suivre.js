@@ -2,28 +2,29 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Documents', {
-      id_document: {
+    await queryInterface.createTable('Suivres', {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      titre: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      fichier: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      type_document: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      date_document: {
+      date_suivre: {
         type: Sequelize.DATE,
         allowNull: false
+      },
+      statut: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      seance_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Seances',
+          key: 'id_seance'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       utilisateur_id: {
         type: Sequelize.INTEGER,
@@ -45,6 +46,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Documents');
+    await queryInterface.dropTable('Suivres');
   }
 };

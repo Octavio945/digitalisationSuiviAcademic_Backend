@@ -1,27 +1,13 @@
 'use strict';
 
-
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Utilisateurs', {
-      id: {
+      id_utilisateur: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      nom: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      prenom: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      date_naissance: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
       },
       email: {
         type: Sequelize.STRING,
@@ -36,25 +22,18 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      type: {
-        type: Sequelize.ENUM('admin', 'enseignant', 'apprenant', 'parent'),
+      statut: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      statut: {
-        type: Sequelize.ENUM('actif', 'inactif'),
+      createdAt: {
         allowNull: false,
-        defaultValue: 'actif'
-      },
-      createAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-      },
+        type: Sequelize.DATE
+      }
     });
   },
   async down(queryInterface, Sequelize) {

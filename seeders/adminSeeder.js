@@ -21,7 +21,8 @@ const createDefaultAdmin = async () => {
       email: 'admin@suiviacademic.com',
       mot_de_passe: hashedPassword,
       telephone: '+229 55 99 42 36',
-      statut: 'actif'
+      statut: 'actif',
+      doit_changer_mdp: true
     });
 
     // Créer l'entrée Admin liée

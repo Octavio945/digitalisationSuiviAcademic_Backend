@@ -82,6 +82,11 @@ module.exports = (sequelize, DataTypes) => {
     statut: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    doit_changer_mdp: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      alowNull: false
     }
   }, {
     sequelize,
